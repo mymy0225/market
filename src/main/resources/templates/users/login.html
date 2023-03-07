@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>[[ ${title} ]]</h1>
+		<form th:action="@{/login}" method="post">
+    		<div th:if="${session['errorCount']  == 0}">
+       			 <span th:text="メールアドレスまたはパスワードが間違っています"></span>
+   			 </div>
+   			 <div th:if="${session['errorCount'] != 0}">
+    			 <div th:if="${session['error1'] != null}">
+       				 <span th:text="${session['error1']}"></span>
+   				 </div>
+   				 <div th:if="${session['error2'] != null}">
+       				 <span th:text="${session['error2']}"></span>
+   				 </div>
+   			 </div>
+			<ul>
+				<li th:each="error : ${#fields.detailedErrors()}">
+					<span th:text="${error.message}">エラー</span>
+				</li>
+			</ul>
+			<ul>
+				<li th:each="error : ${#fields.detailedErrors()}">
+					<span th:text="${error.message}">エラー</span>
+				</li>
+			</ul>
+			<p>
+				<label for="email">メールアドレス:</label>
+				<input type="text" id="email" name="email" autofocus="autofocus">
+			<p>
+				<label for="password">パスワード:</label>
+				<input type="password" id="password" name="password">
+			</p>
+			<p>
+				<input type="submit" value="ログイン">
+			</p>
+		</form>
+	</div>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>息をするように、買おう。</h1>
+		<p>
+			<a class="new" href="/items/create">新規出品</a>
+		</p>
+		<th:block th:if="${items.isEmpty()}">
+			<p>商品はありません</p>
+		</th:block>
+		<div class="flex">
+			<th:block th:if="${!items.isEmpty()}" th:each="item:${items}">
+				<form method="post" class="likes" th:action="@{/toggleLike/{id} (id=${item.id})}">
+					<p>
+						<a th:href="@{/items/{id} (id=${item.id})}">
+							<img class="item_image" th:src="@{/images/{image} (image=${item.image})}">
+						</a>
+					</p>
+					<p class="item_title">[[ ${item.name} ]]</p> 
+					<p>[[|${item.price}円|]] 
+						<button class="favorite" type="submit">[[ ${item.likedUsers.contains(user) ? 'お気に入り' : 'お気に入り登録'} ]]</button>
+						<th:block th:if="${item.orders.isEmpty()}"><span class="on_sale">出品中</span></th:block>
+						<th:block th:if="${!item.orders.isEmpty()}"><span class="sold">売り切れ</span></th:block>
+					</p>
+					<p>[[ ${item.category.name} ]] ([[ ${#temporals.format(item.createdat,"yyyy-MM-dd HH-mm-ss")} ]])</p>
+					<p class="item_description">[[ ${item.description} ]]</p>
+				</form>
+			</th:block>
+		</div>
+	</div>
+</html>

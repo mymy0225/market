@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>[[ ${title} ]]</h1>
+		<th:block th:if="${items.isEmpty()}">
+			<p>出品している商品はありません</p>
+		</th:block>
+		<p>
+			<a class="new" href="/items/create">新規出品</a>
+		</p>
+		<div class="flex">
+			<div th:each="item:${items}">
+				<p>
+					<a th:href="@{/items/{id}/ (id=${item.id})}">
+						<img class="item_image" th:src="@{/images/{image} (image=${item.image})}">
+					</a>
+				</p>
+				<p>[[${item.name}]]</p>
+				<p>[[|${item.price}円|]]
+					<th:block th:if="${item.orders.isEmpty()}"><span class="on_sale">出品中</span></th:block>
+					<th:block th:if="${!item.orders.isEmpty()}"><span class="sold">売り切れ</span></th:block>
+				</p>
+				<p class="item_description">[[ ${item.description} ]]</p>
+				<p>[<a th:href="@{/items/{id}/update (id=${item.id})}">編集</a>][<a th:href="@{/items/{id}/update_image (id=${item.id})}">画像を変更</a>]</p>
+			</div>
+		</div>
+	</div>
+</html>
