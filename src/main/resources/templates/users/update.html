@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>[[ ${title} ]]</h1>
+		<form th:action="@{/users/update}" th:object="${userUpdateForm}" method="post">
+			<ul>
+				<li th:each="error : ${#fields.detailedErrors()}">
+					<span th:text="${error.message}">エラー</span>
+				</li>
+			</ul>
+			<p>
+				<label for="name">ユーザー名：</label>
+				<input type="text" id="name" name="name" autofocus="autofocus" th:value="${user.name}">
+			</p>
+			<p>
+				<label for="profile">プロフィール:</label>
+				<input type="text" id="profile" name="profile" th:value="${user.profile}">
+			</p>
+			<p>
+				<input type="submit" value="更新">
+			</p>
+		</form>	
+	</div>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>[[ ${title} ]]</h1>
+		<h2>商品追加フォーム</h2>
+		<form th:action="@{/items/{id}/update (id=${item.id})}" th:object="${itemUpdateForm}" method="post">
+			<ul>
+				<li th:each="error : ${#fields.detailedErrors()}">
+					<span th:text="${error.message}">エラー</span>
+				</li>
+			</ul>
+			<p>
+				<label for="name">商品名:</label>
+				<input type="text" th:field="*{name}" autofocus="autofocus">
+			</p>
+			<p>
+				<label for="description">商品説明:</label>
+				<input type="text" th:field="*{description}">
+			</p>
+			<p>
+				<label for="price">価格:</label>
+				<input type="number" th:field="*{price}">
+			</p>
+			<p>
+				<label for="category">カテゴリー:</label>
+			</p>
+			<p>
+				<select id="category" name="category">
+					<option th:each="category : ${categories}" th:value="${category.id}" th:selected="${category.id==selectedValue}">[[ ${category.name} ]]</option>
+				</select>
+			</p>
+			<p>
+				<input type="submit" value="出品">
+			</p>
+		</form>
+	</div>
+</html>

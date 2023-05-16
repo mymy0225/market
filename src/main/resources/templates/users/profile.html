@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="main">
+		<h1>[[ ${title} ]]</h1>
+		<img th:if="${user.image!=null}" th:src="@{/images/{image} (image=${user.image})}"><a href="/users/update_image">画像を変更</a>
+		<p>
+			<span>[[ |${user.name} さん| ]]</span> <a href="/users/update">プロフィール編集</a>			
+		</p>
+		<p>
+			<span>[[ |出品数:${user.items.size()}| ]]</span>
+		</p>
+		<p>[[ ${user.profile} ]]</p>
+		<h2>購入履歴</h2>
+		<th:block th:if="${user.orders.isEmpty()}">
+			<p>購入した商品はありません</p>
+		</th:block>
+		<th:block th:if="${!user.orders.isEmpty()}" th:each="item:${user.orders}">
+			<p>
+				<a th:href="@{/items/{id}/ (id=${item.id})}">[[ ${item.name} ]]</a>
+				<span>[[ |${item.price}円| ]] [[ |出品者 ${item.user.name}| ]]</span>
+			</p>
+		</th:block>
+	</div>
+</html>
