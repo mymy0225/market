@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,7 @@ public class IndexController {
 	public String top(
 			@AuthenticationPrincipal(expression="user") User user,
 			@RequestParam(defaultValue="") String keyword,
+			@ModelAttribute("message") String message,
 			Model model) {
 		User refreshedUser=userService.findById(user.getId()).orElseThrow();
 		List<Item> items=itemService.findByUser_idNot(user.getId());
@@ -41,6 +43,7 @@ public class IndexController {
 		model.addAttribute("title","トップページ");
 		model.addAttribute("keyword",keyword);
 		model.addAttribute("main","index/index::main");
+		model.addAttribute("message",message);
 		return "layout/logged_in";
 	}
 	
