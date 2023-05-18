@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<div th:fragment="main">
 		<h1>[[ ${title} ]]</h1>
+		<th:block th:if="${message!=null}">
+			<span>[[${message}]]</span>
+		</th:block>
+		
 		<img th:if="${user.image!=null}" th:src="@{/images/{image} (image=${user.image})}"><a href="/users/update_image">画像を変更</a>
 		<p>
 			<span>[[ |${user.name} さん| ]]</span> <a href="/users/update">プロフィール編集</a>			

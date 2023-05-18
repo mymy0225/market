@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<div th:fragment="main">
 		<h1>息をするように、買おう。</h1>
+		<th:block th:if="${message!=null}">
+			<span>[[${message}]]</span>
+		</th:block>
 		<p>
 			<a class="new" href="/items/create">新規出品</a>
 		</p>

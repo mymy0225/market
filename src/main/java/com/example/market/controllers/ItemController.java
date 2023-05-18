@@ -104,7 +104,7 @@ public class ItemController {
 					itemCreateForm.getImage()
 					);
 			redirectAttributes.addFlashAttribute(
-					"successMassage",
+					"message",
 					"出品が完了しました"
 					);
 			return String.format("redirect:/items/%s",item.getId());
@@ -152,7 +152,7 @@ public class ItemController {
 				itemUpdateForm.getCategory()
 				);
 		redirectAttributes.addFlashAttribute(
-				"successMessage",
+				"message",
 				"商品情報の編集が完了しました！");
 		return String.format("redirect:/items/%s",id);
 	}
@@ -189,7 +189,7 @@ public class ItemController {
 				updateImageForm.getImage()
 				);
 		redirectAttributes.addFlashAttribute(
-				"successMessage",
+				"message",
 				"商品画像の変更が完了しました！");
 		return String.format("redirect:/items/%s",id);
 	}
@@ -198,7 +198,7 @@ public class ItemController {
 	public String detail(
 			@PathVariable("id") long id,
 			@AuthenticationPrincipal(expression="user") User user,
-			@ModelAttribute("soldMessage") String message,
+			@ModelAttribute("message") String message,
 			Model model) {
 		User refreshedUser=userService.findById(user.getId()).orElseThrow();
 		model.addAttribute("user",refreshedUser);
@@ -243,7 +243,7 @@ public class ItemController {
 			Model model) {
 		Item item=itemService.findById(id).orElseThrow();
 			if(!item.getOrders().isEmpty()) {
-				redirectAttributes.addFlashAttribute("soldMessage","申し訳ありません。ちょっと前に売り切れました。");
+				redirectAttributes.addFlashAttribute("message","申し訳ありません。ちょっと前に売り切れました。");
 				return String.format("redirect:/items/%s",id);
 			}
 		item.getOrders().add(user);

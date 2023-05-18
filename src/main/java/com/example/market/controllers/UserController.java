@@ -82,7 +82,7 @@ public class UserController {
 			signUpForm.getPassword(),
 			roles);
 		redirectAttribute.addFlashAttribute(
-				"SuccessMessage",
+				"message",
 				"アカウントの登録が完了しました");
 
 		SecurityContext context=SecurityContextHolder.getContext();
@@ -107,6 +107,7 @@ public class UserController {
 	public String profile(
 			@AuthenticationPrincipal(expression="user") User loginUser,
 			@PathVariable("id") long id,
+			@ModelAttribute("message") String message,
 			Model model) {
 		User user=userService.findById(id).orElseThrow();
 		model.addAttribute("user",user);
@@ -145,7 +146,7 @@ public class UserController {
 				userUpdateForm.getProfile()
 				);
 		redirectAttributes.addFlashAttribute(
-				"successMessage",
+				"message",
 				"プロフィールの編集が完了しました！"
 				);
 		return String.format("redirect:/users/%s",user.getId());
@@ -181,7 +182,7 @@ public class UserController {
 				updateImageForm.getImage()
 				);
 		redirectAttributes.addFlashAttribute(
-				"successMessage",
+				"message",
 				"プロフィール画像の編集が完了しました！");
 		return String.format("redirect:/users/%s",user.getId());
 	}
